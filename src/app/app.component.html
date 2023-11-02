@@ -9,8 +9,39 @@
 
 <input type="text" id ="nombre" placeholder="ingrese su nombre" [(ngModel)]="nombre">
 
+
 <p>
   Nombre ingresado: {{nombre}}
 </p>
+
+<button (click)="getEmployees()">
+  presionar
+</button>
+
+<div class="card">
+  <p-table [value]="employees" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Lastname</th>
+              <th>Salary</th>
+              <th>Email</th>
+              <th>State</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-employee>
+          <tr>
+              <td>{{ employee.employeeId }}</td>
+              <td>{{ employee.namePerson }}</td>
+              <td>{{ employee.lastname }}</td>
+              <td>{{ employee.salary }}</td>
+              <td>{{ employee.email }}</td>
+              <td>{{ employee.state }}</td>
+
+          </tr>
+      </ng-template>
+  </p-table>
+</div>
 
 

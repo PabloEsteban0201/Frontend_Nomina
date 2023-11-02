@@ -1,9 +1,24 @@
 import { Injectable } from '@angular/core';
+import { HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
+import { environment } from 'src/environment/environment';
+import { Observable } from 'rxjs';
+import { employee } from 'src/model/employee';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PruebaService {
 
-  constructor() { }
+  constructor(private httpClient:HttpClient) {
+    
+  }
+
+  url = environment.apiUrl;
+
+  getAllEmployees():Observable<employee>{
+    return this.httpClient.get<employee>(this.url+"/employee")
+  }
+
+
 }

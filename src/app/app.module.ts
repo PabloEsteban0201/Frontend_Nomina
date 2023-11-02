@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { PrimeNgModule } from './primeng/primeng.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,9 @@ import { TableModule } from 'primeng/table';
   imports: [
     BrowserModule,
     FormsModule,
-    TableModule
+    TableModule,
+    HttpClientModule,
+    PrimeNgModule
   ],
   providers: [],
   bootstrap: [AppComponent]
