@@ -1,13 +1,20 @@
 <app-header></app-header>
 <div class="principal">
-    <div class="menu">Menu</div>
+    <div class="menu">Menu
+      <div class="card flex justify-content-center">
+        <p-button label="Submit" (onClick)="getEmployeesSelected()"></p-button>
+      </div>
+    </div>
     <div class ="vista">Vista
       <div class ="contenido">
         Contenido
         <div class="card">
-          <p-table [value]="employees" [tableStyle]="{ 'min-width': '50rem' }">
+          <p-table [value]="employees" [(selection)]="selectedEmployees" dataKey="personalNumber" [tableStyle]="{ 'min-width': '50rem' }">
               <ng-template pTemplate="header">
                   <tr>
+                      <th style="width: 4rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                      </th>
                       <th>Id</th>
                       <th>Name</th>
                       <th>Lastname</th>
@@ -18,6 +25,9 @@
               </ng-template>
               <ng-template pTemplate="body" let-employee>
                   <tr>
+                      <td>
+                        <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+                      </td>
                       <td>{{ employee.employeeId }}</td>
                       <td>{{ employee.namePerson }}</td>
                       <td>{{ employee.lastname }}</td>
@@ -29,6 +39,9 @@
               </ng-template>
           </p-table>
         </div>
+        <div class="card flex justify-content-center">
+          <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="50" ></p-paginator>
+      </div>
       </div>
     </div>
   </div>

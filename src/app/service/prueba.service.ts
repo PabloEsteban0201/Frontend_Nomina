@@ -20,5 +20,9 @@ export class PruebaService {
     return this.httpClient.get<employee>(this.url+"/employee")
   }
 
+  getEmployeesPaginated(page:number):Observable<employee>{
+    return this.httpClient.get<employee>(this.url+ `/employee/page/${page}/2`)
+  }
+
 
 }
