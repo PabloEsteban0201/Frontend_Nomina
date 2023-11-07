@@ -12,52 +12,61 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class EmployeeService {
 
-  constructor(private httpClient:HttpClient) {
-    
+  constructor(private httpClient: HttpClient) {
+
   }
 
   url = environment.apiUrl;
 
-  getAllEmployees():Observable<employee>{
-    return this.httpClient.get<employee>(this.url+"/employee")
+  getAllEmployees(): Observable<employee> {
+    return this.httpClient.get<employee>(this.url + "/employee")
   }
 
-  getEmployeesPaginated(page:number):Observable<employee>{
-    return this.httpClient.get<employee>(this.url+ `/employee/page/${page}/2`)
+  getEmployeesPaginated(page: number): Observable<employee> {
+    return this.httpClient.get<employee>(this.url + `/employee/page/${page}/2`)
   }
 
   //Get the employeesDto using pagination
-  getEmployeesDtoPaginated(pageNo:number):Observable<EmployeeDto[]>{
-    return this.httpClient.get<EmployeeDto[]>(this.url+`/employee/employeeDto/page/${pageNo}/10`)
+  getEmployeesDtoPaginated(pageNo: number): Observable<EmployeeDto[]> {
+    return this.httpClient.get<EmployeeDto[]>(this.url + `/employee/employeeDto/page/${pageNo}/10`)
   }
 
   //get the total of registers in Employees Table
-  getCountEmployees():Observable<number>{
-    return this.httpClient.get<number>(this.url+"/employee/count")
+  getCountEmployees(): Observable<number> {
+    return this.httpClient.get<number>(this.url + "/employee/count")
   }
 
   //get all the copany names
-  getCompanyNames():Observable<CompanieNamesRequest>{
-    return this.httpClient.get<CompanieNamesRequest>(this.url+'/company/getNameCompanies');
+  getCompanyNames(): Observable<CompanieNamesRequest> {
+    return this.httpClient.get<CompanieNamesRequest>(this.url + '/company/getNameCompanies');
   }
 
-  getChargesNames():Observable<string[]>{
-    return this.httpClient.get<string[]>(this.url+'/charge/getChargesNames');
+  getChargesNames(): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.url + '/charge/getChargesNames');
   }
 
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
 
-  updateEmployeeDto(employeeDto:EmployeeDto){
+  updateEmployeeDto(employeeDto: EmployeeDto): Promise<void> {
 
     const employJson = JSON.stringify(employeeDto);
 
-    this.httpClient.put<any>(this.url+'/employee',employJson,this.httpOptions).subscribe(
-      data=>{
-        
-      }
-    );
+    return new Promise<void>((resolve, reject) => {
+
+      this.httpClient.put<any>(this.url + '/employee', employJson, this.httpOptions).subscribe(
+        data => {
+          resolve();
+        },
+        error => {
+          reject(error);
+        }
+
+      );
+
+    });
+  
 
   }
 

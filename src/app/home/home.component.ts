@@ -194,9 +194,6 @@ export class HomeComponent {
   }
 
 
-  rechargeEmployees() {
-    this.service.getEmployeesDtoPaginated(this.page).subscribe(data => { this.employees = data });
-  }
 
   findIndexByPersonalNumber(id: number): number {
     let index = -1;
@@ -210,29 +207,46 @@ export class HomeComponent {
     return index;
   }
 
-  updateEmployee(employeeDto: EmployeeDto) {
-    // Lógica de la función principal
-    this.submitted = true;
-    this.service.updateEmployeeDto(employeeDto);
-    console.log('Función principal ha terminado.');
-    this.employeeDialog=false;
+  // updateEmployee(employeeDto: EmployeeDto) {
+  //   // Lógica de la función principal
     
-  }
+  //   this.service.updateEmployeeDto(employeeDto);
+  //   console.log('Función principal ha terminado.');
+  //   this.employeeDialog=false;
+    
+  // }
 
-  miFuncion() {
-    // Lógica de la función que se ejecutará después de la función principal
+  rechargeEmployees() {
+    
     console.log('La función miFuncion se ejecutó después de la función principal.');
     this.service.getEmployeesDtoPaginated(this.page).subscribe(data => { this.employees = data });
   }
 
-  ejecutarFuncionesEnSerie(employeeDto: EmployeeDto) {
-    // Llama a la función principal
-    this.updateEmployee(employeeDto);
+  async updateEmployee(employeeDto: EmployeeDto) {
+
+    this.submitted = true;
+
+    try {
+      // Llama a la función principal y espera a que se complete
+      await this.service.updateEmployeeDto(employeeDto);
+  
+      // Ahora llama a la función miFuncion después de la actualización
+      this.rechargeEmployees();
+  
+      console.log('Luego de entrar a mi funcion');
+    } catch (error) {
+      console.error('Error al actualizar los datos:', error);
+    }
+
+    // // Llama a la función principal
+    // this.updateEmployee(employeeDto);
     
-    // Llama a la función miFuncion después de que funcionPrincipal haya terminado
-    console.log('antes de entrar a mi funcion');
-    this.miFuncion();
-    console.log('Luego de entrar a mi funcion');
+    // // Llama a la función miFuncion después de que funcionPrincipal haya terminado
+    // console.log('antes de entrar a mi funcion');
+    // this.miFuncion();
+    // console.log('Luego de entrar a mi funcion');
+
+    this.employeeDialog=false;
 
   }
 
