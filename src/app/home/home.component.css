@@ -1,37 +1,26 @@
 .principal{
-
     width: 100%;
     height: 100vh;
     background-color: blue;
     display: flex;
-
 }
 
 .menu{
-    width: 30%;
-    height: 100vh;
+    width: 20%;
     background-color: beige;
 }
 
 .vista{
-    width: 70%;
-    height: 100vh;
+    width: 80%;
+    height: 100%;
     background-color:red;
     display: flex;
     margin: 0 auto;
 }
 
 .contenido{
-
-    width: 80%;
-    height: 100vh;
-    background-color: green;
-    display: flex;
-    flex-direction: column;
-    margin: 50px auto;
-}
-
-.card{
-
+    width: 90%;
     margin-top: 10%;
 }
+
+
