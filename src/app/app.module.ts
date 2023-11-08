@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { PruebaComponent } from './prueba/prueba.component';
+import { AssignConceptsComponent } from './assign-concepts/assign-concepts.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PruebaComponent } from './prueba/prueba.component';
     HeaderComponent,
     HomeComponent,
     FooterComponent,
-    PruebaComponent
+    PruebaComponent,
+    AssignConceptsComponent
   ],
   imports: [
     BrowserModule,

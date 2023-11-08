@@ -5,6 +5,8 @@ import { Route, Router } from '@angular/router';
 import { EmployeeDto } from 'src/model/EmployeeDto';
 import { CompanieNamesRequest } from 'src/model/CompaniesNamesRequest';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { elementAt } from 'rxjs';
+import { CurrencyCompanyRequest } from 'src/model/CurrencyCompnayRequest';
 
 interface State {
   label: string;
@@ -12,14 +14,20 @@ interface State {
 }
 
 interface OptionCompany {
-  label: string;
-  value: string;
+  label: string | null;
+  value: string | null;
 }
 
 interface OptionCharge {
   label: string;
   value: string;
 }
+
+interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
+}
+
 
 @Component({
   selector: 'app-home',
@@ -33,7 +41,7 @@ export class HomeComponent {
 
   companiesNamesRequest: CompanieNamesRequest = { companiesNames: [] };
 
-  selectedEmployees!: employee;
+  selectedEmployees!: EmployeeDto[] | null;
 
   countEmployees: number;
 
@@ -65,7 +73,13 @@ export class HomeComponent {
 
   employee!: EmployeeDto;
 
-  constructor(private service: EmployeeService, private router: Router) {
+  currenciesCompanies!: CurrencyCompanyRequest[];
+
+  noInsert: boolean = true;
+
+  fileSelected: File | null = null;
+
+  constructor(private service: EmployeeService, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.countEmployees = 0;
 
   }
@@ -75,37 +89,57 @@ export class HomeComponent {
     this.getCountEmployees();
     this.getAllCompanyNames();
     this.getAllChargesNames();
+    this.getCurrenciesCompanies();
 
-    console.log()
 
     this.statuses = [
       { label: 'Activo', value: 1 },
       { label: 'Retirado', value: 0 }
     ];
 
+    console.log("normal");
 
   }
 
   openNew() {
+    this.noInsert = false;
     //TODO 
-    //this.employeeDto = {};
+    if (this.cont < 2) {
+      this.cont++;
+    }
+
+    this.employeeDto = {};
+
+
+    this.companiesNames = this.companiesNamesRequest.companiesNames;
+    this.stateEmployee = undefined;
+    this.optionCharge = undefined;
+    this.optionCompany = undefined;
+    this.employeeDto.currency = "COP";
+    this.employeeDto.salary = 0;
+
+    if (this.cont == 1) {
+      //charge the companies
+      this.setOptionsCompany();
+      this.setOptionsCharges();
+    }
+
     this.submitted = false;
+
+    this.findByPersonalNumber(123);
     this.employeeDialog = true;
+
   }
 
   getEmployeesDto() {
     this.service.getEmployeesDtoPaginated(0).subscribe(data => { this.employees = data });
   }
 
-
-  // getEmployees() {
-  //   //this.service.getAllEmployees().subscribe(data=>{this.employees=data})
-  //   this.service.getEmployeesPaginated(0).subscribe(data => { this.employees = data });
-  // }
-
   getEmployeesSelected() {
-    console.log(this.selectedEmployees);
-    this.router.navigate(["/hola"])
+    console.log("empleados seleccionados: ", this.selectedEmployees);
+
+    //Navega a la nueva vista
+    //this.router.navigate(["/hola"])
   }
 
   first: number = 0;
@@ -130,12 +164,12 @@ export class HomeComponent {
   }
 
   editEmployee(employeeDto: any) {
-    this.employee = {...employeeDto}
+    this.noInsert = true;
+    this.employee = { ...employeeDto }
     if (this.cont < 2) {
       this.cont++;
     }
 
-    console.log('cont', this.cont)
     this.employeeDto = { ...employeeDto };
     if (this.employeeDto.state == 1) {
       this.stateEmployee = { label: 'Activo', value: 1 };
@@ -151,9 +185,14 @@ export class HomeComponent {
       this.setOptionsCharges();
     }
 
-    this.optionCompany = this.companiesOptions.find((element) => element.label === employeeDto.nameCompany);
-
+    //otra forma
     this.optionCharge = { label: employeeDto.nameCharge, value: employeeDto.nameCharge };
+    this.optionCompany = { label: employeeDto.nameCompany, value: employeeDto.nameCompany }
+
+
+
+
+
 
     this.employeeDialog = true;
   }
@@ -162,6 +201,7 @@ export class HomeComponent {
     for (let i = 0; i < this.companiesNames.length; i++) {
       this.optionCompany = { label: this.companiesNames[i], value: this.companiesNames[i] };
       this.companiesOptions.push(this.optionCompany);
+      this.optionCompany = undefined;
     }
   }
 
@@ -169,6 +209,7 @@ export class HomeComponent {
     for (let i = 0; i < this.chargesNames.length; i++) {
       this.optionCharge = { label: this.chargesNames[i], value: this.chargesNames[i] };
       this.chargesOptions.push(this.optionCharge);
+      this.optionCharge = undefined;
     }
   }
 
@@ -193,62 +234,210 @@ export class HomeComponent {
     this.submitted = false;
   }
 
-
-
-  findIndexByPersonalNumber(id: number): number {
-    let index = -1;
-    for (let i = 0; i < this.employees.length; i++) {
-      if (this.employees[i].personalNumber === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  }
-
-  // updateEmployee(employeeDto: EmployeeDto) {
-  //   // Lógica de la función principal
-    
-  //   this.service.updateEmployeeDto(employeeDto);
-  //   console.log('Función principal ha terminado.');
-  //   this.employeeDialog=false;
-    
-  // }
-
   rechargeEmployees() {
-    
-    console.log('La función miFuncion se ejecutó después de la función principal.');
+
+    console.log('Función recharge employees');
     this.service.getEmployeesDtoPaginated(this.page).subscribe(data => { this.employees = data });
   }
 
   async updateEmployee(employeeDto: EmployeeDto) {
 
-    this.submitted = true;
+    if (this.findByPersonalNumber(employeeDto.personalNumber)) {
+      //Update
+      if (this.stateEmployee?.value == 1) {
+        employeeDto.state = 1;
+      } else {
+        employeeDto.state = 0;
+      }
 
-    try {
-      // Llama a la función principal y espera a que se complete
-      await this.service.updateEmployeeDto(employeeDto);
-  
-      // Ahora llama a la función miFuncion después de la actualización
-      this.rechargeEmployees();
-  
-      console.log('Luego de entrar a mi funcion');
-    } catch (error) {
-      console.error('Error al actualizar los datos:', error);
+      this.submitted = true;
+
+      const optCompa = this.optionCompany?.value;
+
+      if (optCompa !== undefined) {
+        if (optCompa !== null) {
+          employeeDto.nameCompany = optCompa;
+        }
+
+      } else {
+
+      }
+
+      const optCharge = this.optionCharge?.value;
+
+      if (optCharge !== undefined) {
+        employeeDto.nameCharge = optCharge;
+      } else {
+
+      }
+
+
+      console.log("Data:", employeeDto);
+
+      try {
+        // Llama a la función principal y espera a que se complete
+        await this.service.updateEmployeeDto(employeeDto);
+
+        // Ahora llama a la función miFuncion después de la actualización
+        this.rechargeEmployees();
+
+        console.log('Luego de entrar a mi funcion');
+      } catch (error) {
+        console.error('Error al actualizar los datos:', error);
+      }
+    } else {
+      //Nuevo registro
+
+      if (this.stateEmployee?.value == 1) {
+        employeeDto.state = 1;
+      } else {
+        employeeDto.state = 0;
+      }
+
+      const optCompa = this.optionCompany?.value;
+
+      if (optCompa !== undefined) {
+        if (optCompa !== null) {
+          employeeDto.nameCompany = optCompa;
+        }
+
+      } else {
+
+      }
+
+      const optCharge = this.optionCharge?.value;
+
+      if (optCharge !== undefined) {
+        employeeDto.nameCharge = optCharge;
+      } else {
+
+      }
+
+      this.submitted = true;
+
+      try {
+        // Llama a la función principal y espera a que se complete
+
+        console.log("Data:", employeeDto);
+        await this.service.saveEmployeeDto(employeeDto);
+
+        // Ahora llama a la función miFuncion después de la actualización
+        this.rechargeEmployees();
+      } catch (error) {
+        console.error('Error al actualizar los datos:', error);
+      }
+
     }
 
-    // // Llama a la función principal
-    // this.updateEmployee(employeeDto);
-    
-    // // Llama a la función miFuncion después de que funcionPrincipal haya terminado
-    // console.log('antes de entrar a mi funcion');
-    // this.miFuncion();
-    // console.log('Luego de entrar a mi funcion');
 
-    this.employeeDialog=false;
+
+    this.employeeDialog = false;
 
   }
 
-  
+
+  findByPersonalNumber(in_personalNumber: number): boolean {
+
+    const result = this.employees.find((element) => element.personalNumber === in_personalNumber);
+    if (result !== undefined) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  selectOption(event: any) {
+
+    //console.log('Opción seleccionada:', event);
+
+    const curr = this.currenciesCompanies.find((element) => element.nameCompany === this.optionCompany?.value)?.currency;
+
+    if (curr !== undefined) {
+      this.employeeDto.currency = curr;
+    } else {
+      this.employeeDto.currency = "COP";
+    }
+
+  }
+
+
+  getCurrenciesCompanies() {
+    this.service.getCurrenciesCompanies().subscribe(data => {
+
+      this.currenciesCompanies = data;
+
+    });
+  }
+
+  deleteEmployee(employee: EmployeeDto) {
+    this.confirmationService.confirm({
+      message: '¿Está seguro de eliminar al empleado ' + employee.namePerson + ' ' + employee.lastname + '?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+
+        console.log("antes del try");
+        try {
+          console.log("Entro al try");
+          this.deleteFunction(employee.personalNumber);
+        } catch (error) {
+          console.log("ERROR: ", error)
+        }
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+
+      }
+    });
+
+
+  }
+
+  async deleteFunction(personalNumber: number) {
+    await this.service.deleteEmployee(personalNumber);
+    this.rechargeEmployees();
+  }
+
+
+
+  subirArchivo(event: any) {
+
+    const file = event.files[0];
+
+    if (file) {
+      console.log("Econtro el archivo")
+      const formData = new FormData();
+      formData.append('file', file);
+
+
+      this.sendFileFunction(formData);
+
+
+
+    }
+
+    event.files.pop();
+
+  }
+
+  async sendFileFunction(formData: FormData) {
+    try {
+      await this.service.uploadFile(formData);
+      this.rechargeEmployees();
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Éxito',
+        detail: 'Archivo subido correctamente.'
+      });
+    } catch (error) {
+      console.log("Entro al nuevo catch")
+      this.messageService.add(
+        {
+          severity: 'error',
+          summary: 'Error', detail:
+            'Se rechazo el contenido del archivo'
+        });
+    }
+
+  }
+
 }

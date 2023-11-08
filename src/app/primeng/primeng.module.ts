@@ -13,7 +13,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { InputNumberModule } from 'primeng/inputnumber';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
     declarations: [
       
@@ -30,7 +31,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
         InputTextModule,
         DropdownModule,
         TagModule,
-        InputNumberModule
+        InputNumberModule,
+        ConfirmDialogModule,
+        FileUploadModule
     ],
     exports:[
         TableModule,
@@ -44,7 +47,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
         InputTextModule,
         DropdownModule,
         TagModule,
-        InputNumberModule
+        InputNumberModule,
+        ConfirmDialogModule,
+        FileUploadModule
+
     ]
   })
   export class PrimeNgModule { }

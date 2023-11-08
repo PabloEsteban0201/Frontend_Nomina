@@ -2,7 +2,7 @@
 <div class="principal">
   <div class="menu">Menu
     <div class="card flex justify-content-center">
-      <p-button label="Submit" (onClick)="getEmployeesSelected()"></p-button>
+      <p-button label="Asignar PLIR" (onClick)="getEmployeesSelected()"></p-button>
     </div>
   </div>
   <div class="vista">Vista
@@ -10,10 +10,21 @@
       <div class="card">
         <p-toolbar>
           <div class="p-toolbar-group-start">
+
           </div>
           <div class="p-toolbar-group-end">
-            <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button>
-            <p-button icon="pi pi-plus" label="Ingresar Nuevo Empleado" class="mr-2"></p-button>
+            <p-toast></p-toast>
+            <p-fileUpload
+                name="archivo"
+                [customUpload]="true"
+                (uploadHandler)="subirArchivo($event)"
+                accept=".csv"
+                chooseLabel="Seleccionar archivo CSV"
+                uploadLabel="Subir"
+                cancelLabel="Cancelar"
+                mode="basic"
+              ></p-fileUpload>
+            <p-button icon="pi pi-plus" label="Ingresar Nuevo Empleado" class="mr-2" (click)="openNew()"></p-button>
           </div>
         </p-toolbar>
       </div>
@@ -52,7 +63,7 @@
               <td>
                 <button pButton pRipple icon="pi pi-pencil" (click)="editEmployee(employee)"
                   class="p-button-rounded p-button-success mr-2"></button>
-                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteEmployee(employee)"></button>
               </td>
             </tr>
           </ng-template>
@@ -82,17 +93,19 @@
     </div>
     <div class="field">
       <label for="personalNumber">NUIP</label>
-      <input type="text" pInputText id="personalNumber" [disabled]="true" [(ngModel)]="employeeDto.personalNumber"
+      <input type="number" pInputText id="personalNumber" [disabled]="noInsert" [(ngModel)]="employeeDto.personalNumber"
         required autofocus />
+      <small class="p-error" *ngIf="findByPersonalNumber(employeeDto.personalNumber) && noInsert===false">El numero ya existe</small>
     </div>
     <div class="field">
       <label for="company">Empresa</label>
-      <p-dropdown [(ngModel)]="optionCompany" inputId="company" [options]="companiesOptions" optionLabel="label">
+      <p-dropdown [(ngModel)]="optionCompany" inputId="company" [options]="companiesOptions"  
+      optionLabel="label" placeholder="Seleccione una empresa" (ngModelChange)="selectOption($event)">
       </p-dropdown>
     </div>
     <div class="field">
       <label for="charge">Cargo</label>
-      <p-dropdown [(ngModel)]="optionCharge" inputId="charge" [options]="chargesOptions" optionLabel="label">
+      <p-dropdown [(ngModel)]="optionCharge" inputId="charge" [options]="chargesOptions" optionLabel="label" placeholder="Selecciones un cargo">
       </p-dropdown>
     </div>
     <div class="field">
@@ -108,7 +121,7 @@
     </div>
     <div class="field">
       <label for="estado">Estado del empleado</label>
-      <p-dropdown [(ngModel)]="stateEmployee" inputId="estado" [options]="statuses" optionLabel="label">
+      <p-dropdown [(ngModel)]="stateEmployee" inputId="estado" [options]="statuses" optionLabel="label" placeholder="Seleccione un estado">
       </p-dropdown>
     </div>
   </ng-template>
@@ -117,3 +130,4 @@
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateEmployee(employeeDto)"></button>
   </ng-template>
 </p-dialog>
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

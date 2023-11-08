@@ -6,6 +6,7 @@ import { employee } from 'src/model/employee';
 import { EmployeeDto } from 'src/model/EmployeeDto';
 import { CompanieNamesRequest } from 'src/model/CompaniesNamesRequest';
 import { HttpHeaders } from '@angular/common/http';
+import { CurrencyCompanyRequest } from 'src/model/CurrencyCompnayRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,75 @@ export class EmployeeService {
 
     });
   
+  }
+
+  getCurrenciesCompanies():Observable<CurrencyCompanyRequest[]>{
+
+    return this.httpClient.get<CurrencyCompanyRequest[]>(this.url + '/currency/getCurrenciesCompanies');
+  }
+
+  saveEmployeeDto(employeeDto: EmployeeDto): Promise<void>{
+
+    const employJson = JSON.stringify(employeeDto);
+    console.log("JSon", employJson);
+    return new Promise<void>((resolve, reject) => {
+
+      this.httpClient.post<any>(this.url + '/employee', employJson, this.httpOptions).subscribe(
+        data => {
+          resolve();
+        },
+        error => {
+          console.log(error.status);
+          reject(error);
+          
+        }
+
+      );
+
+    });
+  }
+
+  deleteEmployee(personalNumber:number): Promise<void>{
+    
+    console.log(personalNumber);
+
+    return new Promise<void>((resolve, reject) => {
+
+      this.httpClient.delete(this.url + `/employee/${personalNumber}`).subscribe(
+        data => {
+          resolve();
+        },
+        error => {
+          console.log(error.status);
+          reject(error);
+          
+        }
+
+      );
+
+    });
+
+  }
+
+  uploadFile(formData:FormData): Promise<void>{
+    console.log("Entro al uploadFile");
+
+    return new Promise<void>((resolve, reject) => {
+
+      this.httpClient.post<any>(this.url + "/upload/csv",formData).subscribe(
+        data => {
+          console.log("Respuesta exitosa",data)
+          resolve();
+        },
+        error => {
+          console.log("Se obtuvo un error",error.status);
+          reject(error);
+          
+        }
+
+      );
+
+    });
 
   }
 
