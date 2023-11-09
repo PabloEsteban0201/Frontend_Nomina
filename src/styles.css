@@ -5,3 +5,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Sigmar&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
+body{
+    margin: 0;
+}
+
+/*
+para modificar un estilo de un div hijo que no está en el html del componente
+*/
+.toolbar-home>.p-toolbar{
+    padding: 0.5rem;
+}

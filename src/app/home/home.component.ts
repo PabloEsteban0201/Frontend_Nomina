@@ -7,6 +7,7 @@ import { CompanieNamesRequest } from 'src/model/CompaniesNamesRequest';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { elementAt } from 'rxjs';
 import { CurrencyCompanyRequest } from 'src/model/CurrencyCompnayRequest';
+import { DataSharedService } from '../service/data-shared.service';
 
 interface State {
   label: string;
@@ -79,7 +80,10 @@ export class HomeComponent {
 
   fileSelected: File | null = null;
 
-  constructor(private service: EmployeeService, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService) {
+  selectedEmployeesNumbers!: number;
+
+  constructor(private service: EmployeeService, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService,
+    private dataShareService:DataSharedService) {
     this.countEmployees = 0;
 
   }
@@ -103,7 +107,7 @@ export class HomeComponent {
 
   openNew() {
     this.noInsert = false;
-    //TODO 
+    
     if (this.cont < 2) {
       this.cont++;
     }
@@ -136,10 +140,11 @@ export class HomeComponent {
   }
 
   getEmployeesSelected() {
-    console.log("empleados seleccionados: ", this.selectedEmployees);
-
-    //Navega a la nueva vista
-    //this.router.navigate(["/hola"])
+    //console.log("empleados seleccionados: ", this.selectedEmployees);
+    if(this,this.selectedEmployees!==null){
+      this.dataShareService.selectedEmployeesNumbers=this.selectedEmployees;
+    }
+    //console.log(this.dataShareService.selectedEmployeesNumbers);
   }
 
   first: number = 0;
@@ -438,6 +443,10 @@ export class HomeComponent {
         });
     }
 
+  }
+
+  assignConcepts(){
+    this.router.navigate(['/assignConcepts']);
   }
 
 }

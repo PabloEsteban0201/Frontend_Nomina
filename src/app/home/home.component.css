@@ -1,6 +1,6 @@
 .principal{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: blue;
     display: flex;
 }
@@ -21,6 +21,14 @@
 .contenido{
     width: 90%;
     margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
+
+.toolbarFile{
+    gap:10px;
+}
+
 
 

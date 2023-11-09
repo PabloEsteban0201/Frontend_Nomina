@@ -1,0 +1,19 @@
+.principal{
+    width: 100%;
+    height: 100%;
+    background-color: beige;
+    display: flex;
+}
+
+.vista{
+    width: 100%;
+    background-color:beige;
+}
+
+.contenido{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+

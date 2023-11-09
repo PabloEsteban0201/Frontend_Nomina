@@ -15,6 +15,9 @@ import { TagModule } from 'primeng/tag';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import { MultiSelect, MultiSelectModule } from 'primeng/multiselect';
+import { ScrollerModule } from 'primeng/scroller';
+
 @NgModule({
     declarations: [
       
@@ -33,7 +36,9 @@ import { FileUploadModule } from 'primeng/fileupload';
         TagModule,
         InputNumberModule,
         ConfirmDialogModule,
-        FileUploadModule
+        FileUploadModule,
+        MultiSelectModule,
+        ScrollerModule
     ],
     exports:[
         TableModule,
@@ -49,7 +54,9 @@ import { FileUploadModule } from 'primeng/fileupload';
         TagModule,
         InputNumberModule,
         ConfirmDialogModule,
-        FileUploadModule
+        FileUploadModule,
+        MultiSelectModule,
+        ScrollerModule
 
     ]
   })
