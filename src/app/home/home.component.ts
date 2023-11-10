@@ -24,10 +24,6 @@ interface OptionCharge {
   value: string;
 }
 
-interface UploadEvent {
-  originalEvent: Event;
-  files: File[];
-}
 
 
 @Component({
@@ -389,7 +385,7 @@ export class HomeComponent {
         } catch (error) {
           console.log("ERROR: ", error)
         }
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Exitoso', detail: 'Empleado eliminado', life: 3000 });
 
       }
     });
@@ -447,6 +443,10 @@ export class HomeComponent {
 
   assignConcepts(){
     this.router.navigate(['/assignConcepts']);
+  }
+
+  reportPayments(){
+    this.router.navigate(['/reportPayments']);
   }
 
 }

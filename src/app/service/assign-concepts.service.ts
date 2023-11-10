@@ -3,6 +3,8 @@ import { HttpClient, HttpEvent } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import { BenefitsLicensesDto } from 'src/model/BenefitsLicensesDto';
+import { RequestLiquidationDto } from 'src/model/RequestLiquidationDto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,10 @@ export class AssignConceptsService {
   }
 
   url = environment.apiUrl;
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }
 
   getAllBenefits(): Promise<string[]>{
 
@@ -86,4 +92,20 @@ export class AssignConceptsService {
     });
 
   }
+
+  liquidateEmployees(requestConcepts:BenefitsLicensesDto[]):Promise<RequestLiquidationDto[]>{
+
+    return new Promise<RequestLiquidationDto[]>((resolve, reject) => {
+      this.httpClient.post<RequestLiquidationDto[]>(this.url+"/assign",requestConcepts,this.httpOptions).subscribe(
+        {
+          next:(data)=>resolve(data),
+          error:(error)=>reject(error)
+        }
+
+      )
+    });
+    
+  }
+
+
 }

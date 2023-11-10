@@ -49,35 +49,42 @@
             <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
               [totalRecords]="countEmployees"></p-paginator>
           </div> -->
+            <div class="card flex justify-content-center">
+                <p-button label="Liquidar" (onClick)="liquidate()"></p-button>
+            </div>
         </div>
     </div>
 </div>
 <footer><app-footer></app-footer></footer>
 
 <p-dialog [(visible)]="dialogConcepts" [style]="{ width: '450px', height: '900px'}" header="Editar Empleado"
-  [modal]="true" styleClass="p-fluid">
-  <ng-template pTemplate="content">
-    <div class="field">
-      <label for="Benefits">Prestaciones</label>
-      <p-multiSelect [options]="benefits" [(ngModel)]="selectedBenefits"  optionLabel="name" [showClear]="true"></p-multiSelect>
-    </div>
-    <div class="field">
-      <label for="Licenses">Licencias</label>
-      <p-multiSelect [options]="lincenses" [(ngModel)]="selectedLicenses" optionLabel="name" [showClear]="true"></p-multiSelect>
-    </div>
-    <div class="field">
-      <label for="Taxes">Impuestos</label>
-      <p-multiSelect [options]="taxes" [(ngModel)]="selectedTaxes" optionLabel="name" [showClear]="true"></p-multiSelect>
-    </div>
-    <div class="field">
-        <label for="Retentions">Retenciones</label>
-        <p-multiSelect [options]="retentions" [(ngModel)]="selectedRetentions" optionLabel="name" [showClear]="true"></p-multiSelect>
-      </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
-      (click)="saveConcepts(assignConceptEmployee)"></button>
-  </ng-template>
+    [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="Benefits">Prestaciones</label>
+            <p-multiSelect [options]="benefits" [(ngModel)]="selectedBenefits" optionLabel="name"
+                [showClear]="true"></p-multiSelect>
+        </div>
+        <div class="field">
+            <label for="Licenses">Licencias</label>
+            <p-multiSelect [options]="lincenses" [(ngModel)]="selectedLicenses" optionLabel="name"
+                [showClear]="true"></p-multiSelect>
+        </div>
+        <div class="field">
+            <label for="Taxes">Impuestos</label>
+            <p-multiSelect [options]="taxes" [(ngModel)]="selectedTaxes" optionLabel="name"
+                [showClear]="true"></p-multiSelect>
+        </div>
+        <div class="field">
+            <label for="Retentions">Retenciones</label>
+            <p-multiSelect [options]="retentions" [(ngModel)]="selectedRetentions" optionLabel="name"
+                [showClear]="true"></p-multiSelect>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+            (click)="saveConcepts(assignConceptEmployee)"></button>
+    </ng-template>
 </p-dialog>
 <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

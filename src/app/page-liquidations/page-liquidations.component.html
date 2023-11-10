@@ -1,0 +1,52 @@
+<header><app-header>
+    </app-header>
+</header>
+<div class="principal">
+    <div class="vista">
+        <div class="contenido">
+            <div class="card">
+                <p-table [value]="liquidateEmployees" dataKey="personalNumber" [tableStyle]="{ 'min-width': '50rem'}">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Numero Personal</th>
+                            <th>Salario</th>
+                            <th>Calculo de Prestaciones y Licencias</th>
+                            <th>Calculo de Impuestos y Retenciones</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-employee>
+                        <tr>
+                            <td>{{ employee.namePerson }}</td>
+                            <td>{{ employee.lastname }}</td>
+                            <td >
+                                
+                                    {{ employee.personalNumber }}
+                               
+                            </td>
+                            <td>{{ employee.salary }} {{employee.currency}}</td>
+                            <td >
+                                <div style="overflow-y: auto; max-height: 50px;">
+                                    <div *ngFor="let benefit of employee.benefits">{{benefit.nameConcept}}: {{benefit.amount}} {{employee.currency}}</div>
+                                    <div *ngFor="let lincense of employee.licenses"> {{lincense.nameConcept}}: {{lincense.amount}} {{employee.currency}}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="overflow-y: auto; max-height: 50px;">
+                                    <div *ngFor="let tax of employee.taxes">{{tax.nameConcept}}: {{tax.amount}} {{employee.currency}}</div>
+                                    <div *ngFor="let retention of employee.retentions"> {{retention.nameConcept}}: {{retention.amount}} {{employee.currency}}</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="card flex justify-content-center">
+                <p-button label="Salir" (onClick)="exit()"></p-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer><app-footer></app-footer></footer>

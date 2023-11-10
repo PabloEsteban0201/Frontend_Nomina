@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EmployeeDto } from 'src/model/EmployeeDto';
+import { RequestLiquidationDto } from 'src/model/RequestLiquidationDto';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,8 @@ import { EmployeeDto } from 'src/model/EmployeeDto';
 export class DataSharedService {
 
   selectedEmployeesNumbers!:EmployeeDto[];
+
+  requestLiquidationsDto!:RequestLiquidationDto[];
 
   constructor() { }
 }

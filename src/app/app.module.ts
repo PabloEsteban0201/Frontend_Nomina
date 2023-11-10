@@ -13,6 +13,11 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { PruebaComponent } from './prueba/prueba.component';
 import { AssignConceptsComponent } from './assign-concepts/assign-concepts.component';
+import { PageLiquidationsComponent } from './page-liquidations/page-liquidations.component';
+import { ReportPaymentComponent } from './report-payment/report-payment.component';
+import { DetailPaymentComponent } from './detail-payment/detail-payment.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,12 @@ import { AssignConceptsComponent } from './assign-concepts/assign-concepts.compo
     HomeComponent,
     FooterComponent,
     PruebaComponent,
-    AssignConceptsComponent
+    AssignConceptsComponent,
+    PageLiquidationsComponent,
+    ReportPaymentComponent,
+    DetailPaymentComponent,
+    PaymentHistoryComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -1,11 +1,12 @@
 <header><app-header></app-header></header>
 <div class="principal">
-  <div class="menu">Menu
-    <div class="card flex justify-content-center">
+  <div class="menu">
+    <div class="card flex justify-content-center menu-buttons">
       <p-button label="Asignar PLIR" (onClick)="getEmployeesSelected();assignConcepts()"></p-button>
+      <p-button label="Reportar Nomina" (onClick)="reportPayments()" ></p-button>
     </div>
   </div>
-  <div class="vista">Vista
+  <div class="vista">
     <div class="contenido">
       <div class="card">
         <p-toolbar class="toolbar-home">
