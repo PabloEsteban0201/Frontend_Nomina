@@ -1,0 +1,53 @@
+.principal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+
+.vista{
+    width: 100%;
+    background-color:beige;
+    min-height: 84vh;
+}
+
+.filtro{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    padding: 2rem;
+}
+
+.period{
+    padding: 2rem;
+}
+
+.filter-company{
+    width: fit-content;
+}
+
+.filter-charge{
+    width: fit-content;
+}
+
+.select{
+    margin-left: 2rem;
+}
+
+.employees-payed{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.table-employees-payed{
+    width: 70%;
+    min-height: 50vh;
+}
+
+.report-button{
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}

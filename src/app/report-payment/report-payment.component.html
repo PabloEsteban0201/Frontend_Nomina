@@ -1,16 +1,67 @@
+<header><app-header></app-header></header>
 <div class="principal">
     <div class="vista">
-        <div clas="filter">
-            
+        <div class="filtro">
+            <div class="filter-company">
+                Seleccione una Empresa
+                <p-dropdown [(ngModel)]="selectedCompany" inputId="company" [options]="companies"
+                    optionLabel="nameCompany" placeholder="Seleccione una empresa" [showClear]="true"
+                    (ngModelChange)="selectOption()">
+                </p-dropdown>
+            </div>
+            <div class="filter-charge">
+                Seleccione un Cargo
+                <p-dropdown [(ngModel)]="selectedCharge" inputId="charge" [options]="charges" optionLabel="nameCharge"
+                    placeholder="Seleccione un cargo" [showClear]="true" (ngModelChange)="selectOption()">
+                </p-dropdown>
+            </div>
         </div>
         <div class="select">
-
+            <p-toast></p-toast>
+            <button pButton pRipple label="Buscar Empleados" class="p-button-success"
+                (click)="findEmployees()"></button>
         </div>
         <div class="period">
-
+            Seleccione el periodo a reportar
+                <p-dropdown [(ngModel)]="selectedPeriod" inputId="period" [options]="periods" optionLabel="description"
+                    placeholder="Periodo" [showClear]="true" >
+                </p-dropdown>
         </div>
         <div class="employees-payed">
-
+            <div class="card table-employees-payed">
+                <p-table [value]="employeesPayed" [(selection)]="selectedEmployees" dataKey="personalNumber"
+                    [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 4rem">
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Numero Personal</th>
+                            <th>Salario</th>
+                            <th>Estado del pago</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-employee>
+                        <tr>
+                            <td>
+                                <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+                            </td>
+                            <td>{{ employee.namePerson }}</td>
+                            <td>{{ employee.lastname }}</td>
+                            <td>{{ employee.personalNumber }}</td>
+                            <td>{{ employee.salary }} {{employee.currency}}</td>
+                            <td>En proceso</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="report-button">
+            <button pButton pRipple label="Reportar Nominas" class="p-button-success"
+                (click)="reportPayments()" [disabled]="checkButton()"></button>
         </div>
     </div>
 </div>
+<footer><app-footer></app-footer></footer>

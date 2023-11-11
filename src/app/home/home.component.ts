@@ -6,7 +6,7 @@ import { EmployeeDto } from 'src/model/EmployeeDto';
 import { CompanieNamesRequest } from 'src/model/CompaniesNamesRequest';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { elementAt } from 'rxjs';
-import { CurrencyCompanyRequest } from 'src/model/CurrencyCompnayRequest';
+import { CurrencyCompanyRequest } from 'src/model/CurrencyCompanyRequest';
 import { DataSharedService } from '../service/data-shared.service';
 
 interface State {

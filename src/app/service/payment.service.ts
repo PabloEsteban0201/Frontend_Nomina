@@ -7,6 +7,10 @@ import { RequestLiquidationDto } from 'src/model/RequestLiquidationDto';
 import { liquidateEmployeeDto } from 'src/model/LiquidateEmployeeDto';
 import { Company } from 'src/model/Company';
 import { Charge } from 'src/model/Charge';
+import { EmployeeReportDto } from 'src/model/EmployeeReportDto';
+import { TypePeriod } from 'src/model/TypePeriod';
+import { ReportPaymentDto } from 'src/model/ReportPaymentDto';
+import { PaymentEmployeeDto } from 'src/model/PaymentEmployeeDto';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +52,56 @@ export class PaymentService {
     });
     
   }
+
+  getEmployeesPayedByCompany(companyId:number):Promise<EmployeeReportDto[]>{
+    return new Promise<EmployeeReportDto[]>((resolve, reject) => {
+      this.httpClient.get<EmployeeReportDto[]>(this.url+`/employee/employeesPayed/${companyId}`).subscribe(
+        {
+          next:(data)=>resolve(data),
+          error:(error)=>reject(error.status)
+        }
+
+      )
+    });
+  }
+
+  getEmployeesPayedByCompanyAndCharge(companyId:number, chargeId:number):Promise<EmployeeReportDto[]>{
+    return new Promise<EmployeeReportDto[]>((resolve, reject) => {
+      this.httpClient.get<EmployeeReportDto[]>(this.url+`/employee/employeesPayed/${companyId}/${chargeId}`).subscribe(
+        {
+          next:(data)=>resolve(data),
+          error:(error)=>reject(error.status)
+        }
+
+      )
+    });
+  }
+
+  getPeriods():Promise<TypePeriod[]>{
+
+    return new Promise<TypePeriod[]>((resolve, reject) => {
+      this.httpClient.get<TypePeriod[]>(this.url+'/period/getAllPeriods').subscribe(
+        {
+          next:(data)=>resolve(data),
+          error:(error)=>reject(error)
+        }
+
+      )
+    });
+  }
+
+  reportPayments(employeesToReport:PaymentEmployeeDto):Promise<ReportPaymentDto[]>{
+
+    return new Promise<ReportPaymentDto[]>((resolve, reject) => {
+      this.httpClient.post<ReportPaymentDto[]>(this.url+'/payment',employeesToReport,this.httpOptions).subscribe(
+        {
+          next:(data)=>resolve(data),
+          error:(error)=>reject(error)
+        }
+
+      )
+    });
+  }
+
 
 }

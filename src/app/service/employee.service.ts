@@ -6,7 +6,7 @@ import { employee } from 'src/model/employee';
 import { EmployeeDto } from 'src/model/EmployeeDto';
 import { CompanieNamesRequest } from 'src/model/CompaniesNamesRequest';
 import { HttpHeaders } from '@angular/common/http';
-import { CurrencyCompanyRequest } from 'src/model/CurrencyCompnayRequest';
+import { CurrencyCompanyRequest } from 'src/model/CurrencyCompanyRequest';
 
 @Injectable({
   providedIn: 'root'
