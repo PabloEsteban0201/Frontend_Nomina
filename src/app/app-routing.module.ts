@@ -7,6 +7,7 @@ import { AssignConceptsComponent } from './assign-concepts/assign-concepts.compo
 import { PageLiquidationsComponent } from './page-liquidations/page-liquidations.component';
 import { ReportPaymentComponent } from './report-payment/report-payment.component';
 import { DetailPaymentComponent } from './detail-payment/detail-payment.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 const routes: Routes = [{path:'hola',component:HeaderComponent},
 {path: 'home', component:HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [{path:'hola',component:HeaderComponent},
 {path:'assignConcepts',component:AssignConceptsComponent},
 {path:'liquidations',component:PageLiquidationsComponent},
 {path:'reportPayments',component:ReportPaymentComponent},
-{path:'detailsPayments',component:DetailPaymentComponent}]
+{path:'detailsPayments',component:DetailPaymentComponent},
+{path:'paymentHistory',component:PaymentHistoryComponent}]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

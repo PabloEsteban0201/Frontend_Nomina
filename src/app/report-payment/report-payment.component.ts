@@ -72,10 +72,6 @@ export class ReportPaymentComponent {
 
   }
 
-  //When clear the object is null
-  selectOption() {
-
-  }
 
   async findEmployees() {
     this.selectedEmployees = [];

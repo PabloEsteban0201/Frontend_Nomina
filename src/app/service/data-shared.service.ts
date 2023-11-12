@@ -16,5 +16,7 @@ export class DataSharedService {
 
   reportedPayments!:ReportPaymentDto[];
 
+  employeePaymentHistory!:EmployeeDto;
+
   constructor() { }
 }

@@ -5,7 +5,7 @@
  display: inline-block;
 }
 
-h1{
+.header-title{
     size: 35;
     font-family:'Poppins';
     font-weight: bold;

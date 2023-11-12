@@ -449,4 +449,9 @@ export class HomeComponent {
     this.router.navigate(['/reportPayments']);
   }
 
+  consultPayment(employee:EmployeeDto){
+    this.router.navigate(['/paymentHistory']);
+    this.dataShareService.employeePaymentHistory={...employee};
+  }
+
 }

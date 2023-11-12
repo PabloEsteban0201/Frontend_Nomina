@@ -3,7 +3,7 @@
   <div class="menu">
     <div class="card flex justify-content-center menu-buttons">
       <p-button label="Asignar PLIR" (onClick)="getEmployeesSelected();assignConcepts()"></p-button>
-      <p-button label="Reportar Nomina" (onClick)="reportPayments()" ></p-button>
+      <p-button label="Reportar Nomina" (onClick)="reportPayments()"></p-button>
     </div>
   </div>
   <div class="vista">
@@ -55,11 +55,13 @@
                 <td>{{ employee.salary}} {{employee.currency}}</td>
                 <td>{{ employee.email }}</td>
                 <td>{{ employee.state == 1 ? 'Activo':'Retirado'}}</td>
-                <td>
+                <td style="display: flex; gap: 5px;">
                   <button pButton pRipple icon="pi pi-pencil" (click)="editEmployee(employee)"
                     class="p-button-rounded p-button-success mr-2"></button>
                   <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                     (click)="deleteEmployee(employee)"></button>
+                  <button pButton pRipple icon="pi pi-search" class="p-button-rounded p-button-success"
+                    (click)="consultPayment(employee)"></button>
                 </td>
               </tr>
             </ng-template>

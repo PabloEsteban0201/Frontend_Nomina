@@ -6,13 +6,13 @@
                 Seleccione una Empresa
                 <p-dropdown [(ngModel)]="selectedCompany" inputId="company" [options]="companies"
                     optionLabel="nameCompany" placeholder="Seleccione una empresa" [showClear]="true"
-                    (ngModelChange)="selectOption()">
+                    >
                 </p-dropdown>
             </div>
             <div class="filter-charge">
                 Seleccione un Cargo
                 <p-dropdown [(ngModel)]="selectedCharge" inputId="charge" [options]="charges" optionLabel="nameCharge"
-                    placeholder="Seleccione un cargo" [showClear]="true" (ngModelChange)="selectOption()">
+                    placeholder="Seleccione un cargo" [showClear]="true" >
                 </p-dropdown>
             </div>
         </div>
