@@ -8,6 +8,7 @@ import { PageLiquidationsComponent } from './page-liquidations/page-liquidations
 import { ReportPaymentComponent } from './report-payment/report-payment.component';
 import { DetailPaymentComponent } from './detail-payment/detail-payment.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
+import { SelectAvailableEmployeesComponent } from './select-available-employees/select-available-employees.component';
 
 const routes: Routes = [{path:'hola',component:HeaderComponent},
 {path: 'home', component:HomeComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [{path:'hola',component:HeaderComponent},
 {path:'liquidations',component:PageLiquidationsComponent},
 {path:'reportPayments',component:ReportPaymentComponent},
 {path:'detailsPayments',component:DetailPaymentComponent},
-{path:'paymentHistory',component:PaymentHistoryComponent}]
+{path:'paymentHistory',component:PaymentHistoryComponent},
+{path:'availableEmployees',component:SelectAvailableEmployeesComponent}]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

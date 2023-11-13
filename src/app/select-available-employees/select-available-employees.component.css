@@ -1,0 +1,39 @@
+.principal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+
+.vista{
+    width: 100%;
+    background-color:beige;
+    min-height: 84vh;
+    
+}
+
+.contenido{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.tabla{
+    display: flex;
+    justify-content: center;
+
+}
+
+.table{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.assign-button{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+

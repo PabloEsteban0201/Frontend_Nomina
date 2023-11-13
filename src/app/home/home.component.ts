@@ -97,8 +97,6 @@ export class HomeComponent {
       { label: 'Retirado', value: 0 }
     ];
 
-    console.log("normal");
-
   }
 
   openNew() {
@@ -135,13 +133,6 @@ export class HomeComponent {
     this.service.getEmployeesDtoPaginated(0).subscribe(data => { this.employees = data });
   }
 
-  getEmployeesSelected() {
-    //console.log("empleados seleccionados: ", this.selectedEmployees);
-    if(this,this.selectedEmployees!==null){
-      this.dataShareService.selectedEmployeesNumbers=this.selectedEmployees;
-    }
-    //console.log(this.dataShareService.selectedEmployeesNumbers);
-  }
 
   first: number = 0;
   rows: number = 10;
@@ -189,10 +180,6 @@ export class HomeComponent {
     //otra forma
     this.optionCharge = { label: employeeDto.nameCharge, value: employeeDto.nameCharge };
     this.optionCompany = { label: employeeDto.nameCompany, value: employeeDto.nameCompany }
-
-
-
-
 
 
     this.employeeDialog = true;
@@ -336,7 +323,7 @@ export class HomeComponent {
 
   }
 
-
+  //TODO esto debe revisar la base de datos
   findByPersonalNumber(in_personalNumber: number): boolean {
 
     const result = this.employees.find((element) => element.personalNumber === in_personalNumber);
@@ -409,11 +396,7 @@ export class HomeComponent {
       const formData = new FormData();
       formData.append('file', file);
 
-
       this.sendFileFunction(formData);
-
-
-
     }
 
     event.files.pop();
@@ -442,7 +425,7 @@ export class HomeComponent {
   }
 
   assignConcepts(){
-    this.router.navigate(['/assignConcepts']);
+    this.router.navigate(['/availableEmployees']);
   }
 
   reportPayments(){

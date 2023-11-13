@@ -18,6 +18,7 @@ import { ReportPaymentComponent } from './report-payment/report-payment.componen
 import { DetailPaymentComponent } from './detail-payment/detail-payment.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { LoginComponent } from './login/login.component';
+import { SelectAvailableEmployeesComponent } from './select-available-employees/select-available-employees.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LoginComponent } from './login/login.component';
     ReportPaymentComponent,
     DetailPaymentComponent,
     PaymentHistoryComponent,
-    LoginComponent
+    LoginComponent,
+    SelectAvailableEmployeesComponent
   ],
   imports: [
     BrowserModule,
