@@ -85,7 +85,22 @@ export class SelectAvailableEmployeesComponent {
   assignConcepts(){
     
     if(this.selectedEmployees.length!==0){
-      this.router.navigate(['/assignConcepts']);
+
+      this.confirmationService.confirm({
+        message: '¿Desea continuar para asignar los conceptos de pago?',
+        header: 'Confirmar',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          try {
+            this.router.navigate(['/assignConcepts']);
+          } catch (error) {
+            console.log("ERROR: ", error)
+          }
+          this.messageService.add({ severity: 'success', summary: 'Exitoso', detail: 'Asignar conceptos', life: 3000 });
+        }
+      });
+
+      
     }else{
       this.messageService.add(
         {
@@ -103,8 +118,6 @@ export class SelectAvailableEmployeesComponent {
     }
    
   }
-
-
 
 
 }

@@ -8,6 +8,7 @@
 .vista {
     width: 100%;
     background-color: beige;
+    min-height: 84vh;
 }
 
 .contenido {
@@ -17,4 +18,9 @@
     margin: auto;
     align-items: center;
     justify-content: center;
+}
+
+.tabla{
+    margin-top: 5%;
+    min-height: 50vh;
 }

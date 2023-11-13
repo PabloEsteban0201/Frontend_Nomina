@@ -4,14 +4,15 @@
         <div class="titulo">
             <h1 class="title-history">Historial de pagos</h1>
         </div>
-        <div class = "employee">
-            <p class="employee-info">Pagos del empleado: </p><p>&nbsp;{{this.employee.namePerson}}&nbsp;{{this.employee.lastname}}</p>
-            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empresa:&nbsp;{{this.employee.nameCompany}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cargo:&nbsp;{{this.employee.nameCharge}}</p>
+        <div class="employee">
+            <p class="employee-info">Pagos del empleado: </p>
+            <p>&nbsp;{{this.employee.namePerson}}&nbsp;{{this.employee.lastname}}</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empresa:&nbsp;{{this.employee.nameCompany}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cargo:&nbsp;{{this.employee.nameCharge}}
+            </p>
         </div>
         <div class="contenido">
             <div class="card table-employees-payed">
-                <p-table [value]="payments"  dataKey="personalNumber"
-                    [tableStyle]="{ 'min-width': '50rem' }">
+                <p-table [value]="payments" dataKey="personalNumber" [tableStyle]="{ 'min-width': '50rem' }">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>Fecha de Pago</th>
@@ -31,7 +32,10 @@
                             <td>{{ payment.discounts }} {{payment.currency}}</td>
                             <td>{{ payment.additions }} {{payment.currency}}</td>
                             <td>{{ payment.total }} {{payment.currency}}</td>
-                            <td>Boton</td>
+                            <td>
+                                <button pButton pRipple icon="pi pi-search" class="p-button-rounded p-button-success"
+                                    (click)="consultDetailsPayment(payment)"></button>
+                            </td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -40,3 +44,16 @@
     </div>
 </div>
 <footer><app-footer></app-footer></footer>
+
+<p-dialog [(visible)]="detailsDialog" [style]="{ width: '450px'}" header="Detalles de Pago"
+    [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div *ngFor="let concept of paymentDetails.payConcepts" >
+            {{concept.nameConcept}}: {{concept.amount}}&nbsp; {{paymentDetails.currency}}
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Salir" icon="pi pi-times" class="p-button-text"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

@@ -17,7 +17,14 @@ export class PaymentHistoryComponent {
   //To show in the table
   payments: PaymentDetailsDto[] = [];
 
+  //Data entry
   employee!:EmployeeDto;
+
+  //details payment button
+  detailsDialog:boolean =false; 
+
+  //payment to consult payment details
+  paymentDetails!: PaymentDetailsDto;
 
   constructor(private paymentHistoryService: PaymentHistoryService, private router: Router,private dataService:DataSharedService) {
 
@@ -39,4 +46,15 @@ export class PaymentHistoryComponent {
 
 
   }
+
+  consultDetailsPayment(paymentDetails:PaymentDetailsDto){
+
+    this.paymentDetails={...paymentDetails};
+    this.detailsDialog=true;
+  }
+
+  hideDialog(){
+    this.detailsDialog=false;
+  }
+
 }

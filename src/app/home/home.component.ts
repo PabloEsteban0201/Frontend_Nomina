@@ -359,6 +359,7 @@ export class HomeComponent {
   }
 
   deleteEmployee(employee: EmployeeDto) {
+    
     this.confirmationService.confirm({
       message: '¿Está seguro de eliminar al empleado ' + employee.namePerson + ' ' + employee.lastname + '?',
       header: 'Confirmar',

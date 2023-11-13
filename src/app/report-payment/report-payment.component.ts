@@ -9,6 +9,7 @@ import { TypePeriod } from 'src/model/TypePeriod';
 import { ReportPaymentDto } from 'src/model/ReportPaymentDto';
 import { PaymentEmployeeDto } from 'src/model/PaymentEmployeeDto';
 import { DataSharedService } from '../service/data-shared.service';
+import { PaymentDetailsDto } from 'src/model/PaymentDetailsDto';
 
 
 @Component({
@@ -43,6 +44,14 @@ export class ReportPaymentComponent {
 
   //Report button
   enableReport: boolean = true;
+
+  //details payment button
+  detailsDialog:boolean =false; 
+
+  //payment to consult payment details
+  paymentDetails!: PaymentDetailsDto;
+
+  
 
   constructor(private dataService:DataSharedService,private paymentService: PaymentService, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService) {
 
