@@ -66,7 +66,7 @@ export class PaymentHistoryComponent {
     // Con file-saver
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
 
-    saveAs(blob, 'pagos'+this.employee.lastname+this.employee.lastname+'.csv');
+    saveAs(blob, 'pagos'+this.employee.lastname+this.employee.personalNumber+'.csv');
 
   }
 
