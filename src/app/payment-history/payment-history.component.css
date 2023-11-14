@@ -40,7 +40,9 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-top: 2rem;
+    flex-direction: column;
 }
 
 .title-history{
@@ -48,5 +50,9 @@
     font-family:'Poppins';
     font-weight: bold;
     color: #016D38;
+}
+
+.download-button{
+    margin-top: 2rem;
 }
 

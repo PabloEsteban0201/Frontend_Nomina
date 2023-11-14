@@ -17,8 +17,8 @@ import { PageLiquidationsComponent } from './page-liquidations/page-liquidations
 import { ReportPaymentComponent } from './report-payment/report-payment.component';
 import { DetailPaymentComponent } from './detail-payment/detail-payment.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
-import { LoginComponent } from './login/login.component';
 import { SelectAvailableEmployeesComponent } from './select-available-employees/select-available-employees.component';
+import { LoginUserComponent } from './login-user/login-user.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,8 @@ import { SelectAvailableEmployeesComponent } from './select-available-employees/
     ReportPaymentComponent,
     DetailPaymentComponent,
     PaymentHistoryComponent,
-    LoginComponent,
-    SelectAvailableEmployeesComponent
+    SelectAvailableEmployeesComponent,
+    LoginUserComponent
   ],
   imports: [
     BrowserModule,

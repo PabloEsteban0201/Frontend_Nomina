@@ -438,4 +438,25 @@ export class HomeComponent {
     this.dataShareService.employeePaymentHistory={...employee};
   }
 
+  deletePayments(){
+
+    this.confirmationService.confirm({
+      message: '¿Está seguro de eliminar los pagos antiguos?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+
+        console.log("antes del try");
+        try {
+          console.log("Entro al try");
+          //this.deleteFunction(employee.personalNumber);
+        } catch (error) {
+          console.log("ERROR: ", error)
+        }
+        this.messageService.add({ severity: 'success', summary: 'Exitoso', detail: 'Empleado eliminado', life: 3000 });
+
+      }
+    });
+  }
+
 }

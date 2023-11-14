@@ -1,0 +1,34 @@
+<header><app-header></app-header></header>
+<div class="principal">
+    <div class="titulo">
+        <h1 class="title-history">Ingreso</h1>
+    </div>
+    <div class="vista">
+        <div class="icono">
+            <i class="pi pi-user" style="font-size: 8rem; color: #016D38;"></i>
+        </div>
+        <div class="contenido">
+
+            <div class="campos">
+                <div class="username">
+                    <label htmlFor="username" class="label">Usuario</label>
+                    <input pInputText id="username" aria-describedby="username-help" [(ngModel)]="username"
+                        style="width: 300px;" placeholder="Usuario" />
+                    <small id="username-help">Ingrese el usuario.</small>
+                </div>
+                <div class="password">
+                    <label htmlFor="username" class="label">Contraseña</label>
+                    <p-password [(ngModel)]="password" [toggleMask]="true" [feedback]="false"
+                        [inputStyle]="{'width': '300px'}" placeholder="Contraseña"></p-password>
+                    <small id="username-help">Ingrese la contraseña.</small>
+                </div>
+                <div class="button">
+                    <p-toast></p-toast>
+                    <p-button label="Ingresar" severity="success" [style]="{'color':'#016D38', 'background-color':'#FFFFFF',
+                    'border':'1px solid #016D38'}" (onClick)="login()"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer><app-footer></app-footer></footer>

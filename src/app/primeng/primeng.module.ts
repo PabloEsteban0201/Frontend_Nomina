@@ -17,6 +17,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MultiSelect, MultiSelectModule } from 'primeng/multiselect';
 import { ScrollerModule } from 'primeng/scroller';
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { ScrollerModule } from 'primeng/scroller';
         ConfirmDialogModule,
         FileUploadModule,
         MultiSelectModule,
-        ScrollerModule
+        ScrollerModule,
+        PasswordModule
     ],
     exports:[
         TableModule,
@@ -56,7 +58,8 @@ import { ScrollerModule } from 'primeng/scroller';
         ConfirmDialogModule,
         FileUploadModule,
         MultiSelectModule,
-        ScrollerModule
+        ScrollerModule,
+        PasswordModule
 
     ]
   })

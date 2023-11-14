@@ -1,0 +1,48 @@
+.principal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+
+.vista{
+    width: 100%;
+    background-color:beige;
+    min-height: 84vh;
+}
+
+.titulo{
+    margin-top: 2rem;
+    margin-left: 10%;
+}
+
+
+
+.contenido{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    /*To center vertical and horizontal*/
+    align-items: center;
+    flex-direction: column;
+}
+
+.table-reported-pays{
+   width: fit-content;
+    min-height: 50vh;
+}
+
+.title-history{
+    size: 35;
+    font-family:'Poppins';
+    font-weight: bold;
+    color: #016D38;
+}
+
+.exit-button{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    
+}

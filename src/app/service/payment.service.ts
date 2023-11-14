@@ -11,6 +11,7 @@ import { EmployeeReportDto } from 'src/model/EmployeeReportDto';
 import { TypePeriod } from 'src/model/TypePeriod';
 import { ReportPaymentDto } from 'src/model/ReportPaymentDto';
 import { PaymentEmployeeDto } from 'src/model/PaymentEmployeeDto';
+import { PaymentDetailsDto } from 'src/model/PaymentDetailsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -101,6 +102,11 @@ export class PaymentService {
 
       )
     });
+  }
+
+  getDetailsPayment(paymentId:number):Observable<PaymentDetailsDto>{
+
+    return this.httpClient.get<PaymentDetailsDto>(this.url+`/payment/detail/${paymentId}`);
   }
 
 

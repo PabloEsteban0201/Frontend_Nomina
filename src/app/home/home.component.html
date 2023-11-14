@@ -1,80 +1,80 @@
 <header><app-header></app-header></header>
 <div class="principal">
-  <div class="menu">
-    <div class="card flex justify-content-center menu-buttons">
-      <p-button label="Asignar Conceptos de Pago" (onClick)="assignConcepts()"></p-button>
-      <p-button class="boton-reportar" label="Reportar Nomina" (onClick)="reportPayments()"></p-button>
-    </div>
-  </div>
-  <div class="vista">
-    <div class="contenido">
-      <div class="card">
-        <p-toolbar class="toolbar-home">
-          <div class="p-toolbar-group-start">
-
-          </div>
-          <div class="p-toolbar-group-end toolbarFile">
-            <p-toast></p-toast>
-            <p-fileUpload name="archivo" [customUpload]="true" (uploadHandler)="subirArchivo($event)" accept=".csv"
-              chooseLabel="Seleccionar archivo CSV" uploadLabel="Subir" cancelLabel="Cancelar"
-              mode="basic"></p-fileUpload>
-            <p-button icon="pi pi-plus" label="Ingresar Nuevo Empleado" class="mr-2" (click)="openNew()"></p-button>
-          </div>
-        </p-toolbar>
+  <div class="menu-contenido">
+    <div class="menu">
+      <div class="titulo">
+        <h2 class="title-home" >Operaciones <br> Empleados</h2>
       </div>
-      <div>
+      <div class="card flex justify-content-center menu-buttons">
+        <p-button label="Asignar Conceptos de Pago" (onClick)="assignConcepts()" [style]="{'width':'290px'}"></p-button>
+        <p-button class="boton-reportar" label="Reportar Nomina" (onClick)="reportPayments()" [style]="{'width':'290px'}"></p-button>
+        <!-- <p-button class="boton-eliminar" label="Eliminar Pagos Antiguos" (onClick)="deletePayments()" [style]="{'width':'290px'}"></p-button> -->
+      </div>
+    </div>
+    <div class="vista">
+      <div class="contenido">
+        <h1 class="title-employees">Empleados</h1>
         <div class="card">
-          <p-table [value]="employees" [(selection)]="selectedEmployees" dataKey="personalNumber"
-            [tableStyle]="{ 'min-width': '50rem' , 'min-height':'30rem'}">
-            <ng-template pTemplate="header">
-              <tr>
-                <th style="width: 4rem">
-                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Numero Personal</th>
-                <th>Empresa</th>
-                <th>Cargo</th>
-                <th>Salario</th>
-                <th>Email</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-employee>
-              <tr>
-                <td>
-                  <p-tableCheckbox [value]="employee"></p-tableCheckbox>
-                </td>
-                <td>{{ employee.namePerson }}</td>
-                <td>{{ employee.lastname }}</td>
-                <td>{{ employee.personalNumber }}</td>
-                <td>{{ employee.nameCompany }}</td>
-                <td>{{ employee.nameCharge }}</td>
-                <td>{{ employee.salary}} {{employee.currency}}</td>
-                <td>{{ employee.email }}</td>
-                <td>{{ employee.state == 1 ? 'Activo':'Retirado'}}</td>
-                <td style="display: flex; gap: 5px;">
-                  <button pButton pRipple icon="pi pi-pencil" (click)="editEmployee(employee)"
-                    class="p-button-rounded p-button-success mr-2"></button>
-                  <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                    (click)="deleteEmployee(employee)"></button>
-                  <button pButton pRipple icon="pi pi-search" class="p-button-rounded p-button-success"
-                    (click)="consultPayment(employee)"></button>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
+          <p-toolbar class="toolbar-home">
+            <div class="p-toolbar-group-start">
+
+            </div>
+            <div class="p-toolbar-group-end toolbarFile">
+              <p-toast></p-toast>
+              <p-fileUpload name="archivo" [customUpload]="true" (uploadHandler)="subirArchivo($event)" accept=".csv"
+                chooseLabel="Seleccionar archivo CSV" uploadLabel="Subir" cancelLabel="Cancelar"
+                mode="basic"></p-fileUpload>
+              <p-button icon="pi pi-plus" label="Ingresar Nuevo Empleado" class="mr-2" (click)="openNew()"></p-button>
+            </div>
+          </p-toolbar>
         </div>
-        <div class="card flex justify-content-center">
-          <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-            [totalRecords]="countEmployees"></p-paginator>
+        <div>
+          <div class="card">
+            <p-table [value]="employees" [(selection)]="selectedEmployees" dataKey="personalNumber"
+              [tableStyle]="{ 'min-width': '50rem' , 'min-height':'30rem'}">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Numero Personal</th>
+                  <th>Empresa</th>
+                  <th>Cargo</th>
+                  <th>Salario</th>
+                  <th>Email</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-employee>
+                <tr>
+                  <td>{{ employee.namePerson }}</td>
+                  <td>{{ employee.lastname }}</td>
+                  <td>{{ employee.personalNumber }}</td>
+                  <td>{{ employee.nameCompany }}</td>
+                  <td>{{ employee.nameCharge }}</td>
+                  <td>{{ employee.salary}} {{employee.currency}}</td>
+                  <td>{{ employee.email }}</td>
+                  <td>{{ employee.state == 1 ? 'Activo':'Retirado'}}</td>
+                  <td style="display: flex; gap: 5px;">
+                    <button pButton pRipple icon="pi pi-pencil" (click)="editEmployee(employee)"
+                      class="p-button-rounded p-button-success mr-2"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                      (click)="deleteEmployee(employee)"></button>
+                    <button pButton pRipple icon="pi pi-search" class="p-button-rounded p-button-success"
+                      (click)="consultPayment(employee)"></button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <div class="card flex justify-content-center">
+            <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+              [totalRecords]="countEmployees"></p-paginator>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 <footer><app-footer></app-footer></footer>
 

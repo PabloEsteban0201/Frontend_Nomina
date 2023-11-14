@@ -1,7 +1,12 @@
 .principal{
     width: 100%;
     height: 100%;
-    background-color: blue;
+    background-color: beige;
+    display: flex;
+}
+
+.menu-contenido{
+    width: 100%;
     display: flex;
 }
 
@@ -9,13 +14,38 @@
     width: 20%;
     background-color: beige;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-left: 2rem;
+    margin-top: 8rem;
+}
+
+.boton-eliminar{
+    margin-top: 35rem;
+}
+
+.titulo{
+    width: fit-content;
+    display: flex;
+
+}
+
+.title-home{
+    size: 15;
+    font-family:'Poppins';
+    font-weight: bold;
+    color: #016D38;
+    padding: 0%;
+    margin-top: 0;
+    text-align: left;
 }
 
 .menu-buttons{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 15rem;
+    align-items:start;
 }
 
 .vista{
@@ -24,25 +54,28 @@
     background-color:beige;
     display: flex;
     margin: 0 auto;
-    align-items: center; 
-    justify-content: center;
+    align-items: start; 
 }
 
 .contenido{
     width: 90%;
-    margin-top: 10%;
+    margin-top: 2%;
     display: flex;
     flex-direction: column;
     gap: 10px;
 
 }
 
+.title-employees{
+    size: 15;
+    font-family:'Poppins';
+    font-weight: bold;
+    color: #016D38;
+}
+
 .toolbarFile{
     gap:10px;
 }
 
-.boton-reportar{
-    width: 100px;
-}
 
 

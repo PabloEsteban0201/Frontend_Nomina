@@ -13,6 +13,7 @@ export class PaymentHistoryService {
 
   constructor(private httpClient: HttpClient) { }
 
+  //How to get the errors in a better way
   getPaymentHistory(personalNumber:number): Promise<PaymentDetailsDto[]>{
 
     return new Promise<PaymentDetailsDto[]>((resolve, reject) => {
@@ -34,6 +35,9 @@ export class PaymentHistoryService {
     });
 
   }
+
+
+  
 
 
 }
