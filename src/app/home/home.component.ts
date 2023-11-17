@@ -78,8 +78,16 @@ export class HomeComponent {
 
   selectedEmployeesNumbers!: number;
 
+  existanceEmployee: boolean = false;
+
+  //To get if a new operation or a update operation
+  isNewEmployee: boolean = false;
+
+  //final page
+  finalPage: number = 0;
+
   constructor(private service: EmployeeService, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService,
-    private dataShareService:DataSharedService) {
+    private dataShareService: DataSharedService) {
     this.countEmployees = 0;
 
   }
@@ -91,7 +99,6 @@ export class HomeComponent {
     this.getAllChargesNames();
     this.getCurrenciesCompanies();
 
-
     this.statuses = [
       { label: 'Activo', value: 1 },
       { label: 'Retirado', value: 0 }
@@ -100,8 +107,10 @@ export class HomeComponent {
   }
 
   openNew() {
+    this.getFinalPage();
     this.noInsert = false;
-    
+    this.isNewEmployee = true;
+
     if (this.cont < 2) {
       this.cont++;
     }
@@ -124,7 +133,6 @@ export class HomeComponent {
 
     this.submitted = false;
 
-    this.findByPersonalNumber(123);
     this.employeeDialog = true;
 
   }
@@ -142,6 +150,10 @@ export class HomeComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
+
+    console.log("first",this.first);
+    console.log("rows",this.rows);
+
     this.rows = event.rows;
 
     this.page = this.first / this.rows;
@@ -150,12 +162,13 @@ export class HomeComponent {
 
   }
 
-  getCountEmployees() {
+  async getCountEmployees() {
 
-    this.service.getCountEmployees().subscribe(data => { this.countEmployees = data })
+    await this.service.getCountEmployees().then((data:number)=>{this.countEmployees=data});
   }
 
   editEmployee(employeeDto: any) {
+    this.isNewEmployee = false;
     this.noInsert = true;
     this.employee = { ...employeeDto }
     if (this.cont < 2) {
@@ -222,15 +235,46 @@ export class HomeComponent {
     this.submitted = false;
   }
 
-  rechargeEmployees() {
+  async rechargeEmployees() {
+    await this.getCountEmployees();
+    this.rows=10;
+    this.first=this.page*10;
+    this.page = this.first / this.rows;
+    
 
-    console.log('Función recharge employees');
+    console.log("rows",this.rows);
+    console.log("rows",this.first);
+    console.log("rows",this.page);
+
+    console.log('Función recharge employees al actualizar');
     this.service.getEmployeesDtoPaginated(this.page).subscribe(data => { this.employees = data });
+  }
+
+  async rechargeEmployeesFinalPage() {
+    await this.getCountEmployees();
+    this.getFinalPage();
+
+    this.rows=10;
+    this.first=this.finalPage*10;
+    this.page = this.first / this.rows;
+    
+    
+    console.log('Función recharge employees al guardar');
+    console.log("final page", this.finalPage);
+
+    this.service.getEmployeesDtoPaginated(this.page).subscribe(data => { this.employees = data });
+    console.log("Despues de recargar");
+
   }
 
   async updateEmployee(employeeDto: EmployeeDto) {
 
-    if (this.findByPersonalNumber(employeeDto.personalNumber)) {
+
+    await this.service.getExistanceEmployee(employeeDto.personalNumber).then((data) => { this.existanceEmployee = data });
+
+    console.log("existencia del empleado", this.existanceEmployee);
+
+    if (this.existanceEmployee && !this.isNewEmployee) {
       //Update
       if (this.stateEmployee?.value == 1) {
         employeeDto.state = 1;
@@ -273,9 +317,11 @@ export class HomeComponent {
       } catch (error) {
         console.error('Error al actualizar los datos:', error);
       }
-    } else {
-      //Nuevo registro
+    }
 
+    //Nuevo registro
+
+    if (!this.existanceEmployee && this.isNewEmployee) {
       if (this.stateEmployee?.value == 1) {
         employeeDto.state = 1;
       } else {
@@ -305,16 +351,29 @@ export class HomeComponent {
 
       try {
         // Llama a la función principal y espera a que se complete
-
-        console.log("Data:", employeeDto);
         await this.service.saveEmployeeDto(employeeDto);
+        this.rechargeEmployeesFinalPage();
 
-        // Ahora llama a la función miFuncion después de la actualización
-        this.rechargeEmployees();
+
       } catch (error) {
         console.error('Error al actualizar los datos:', error);
       }
 
+
+      //this.service.getEmployeesDtoPaginated(this.getFinalPage()).subscribe(data => { this.employees = data });
+
+
+
+    }
+
+    if (this.existanceEmployee && this.isNewEmployee) {
+      console.log("Ya existe")
+      this.messageService.add(
+        {
+          severity: 'error',
+          summary: 'Error', detail:
+            'El número personal ya existe'
+        });
     }
 
 
@@ -326,12 +385,9 @@ export class HomeComponent {
   //TODO esto debe revisar la base de datos
   findByPersonalNumber(in_personalNumber: number): boolean {
 
-    const result = this.employees.find((element) => element.personalNumber === in_personalNumber);
-    if (result !== undefined) {
-      return true;
-    } else {
-      return false;
-    }
+    this.service.getExistanceEmployee(in_personalNumber).then(data => { this.existanceEmployee = data });
+
+    return this.existanceEmployee;
 
   }
 
@@ -359,7 +415,7 @@ export class HomeComponent {
   }
 
   deleteEmployee(employee: EmployeeDto) {
-    
+
     this.confirmationService.confirm({
       message: '¿Está seguro de eliminar al empleado ' + employee.namePerson + ' ' + employee.lastname + '?',
       header: 'Confirmar',
@@ -425,20 +481,20 @@ export class HomeComponent {
 
   }
 
-  assignConcepts(){
+  assignConcepts() {
     this.router.navigate(['/availableEmployees']);
   }
 
-  reportPayments(){
+  reportPayments() {
     this.router.navigate(['/reportPayments']);
   }
 
-  consultPayment(employee:EmployeeDto){
+  consultPayment(employee: EmployeeDto) {
     this.router.navigate(['/paymentHistory']);
-    this.dataShareService.employeePaymentHistory={...employee};
+    this.dataShareService.employeePaymentHistory = { ...employee };
   }
 
-  deletePayments(){
+  deletePayments() {
 
     this.confirmationService.confirm({
       message: '¿Está seguro de eliminar los pagos antiguos?',
@@ -459,4 +515,16 @@ export class HomeComponent {
     });
   }
 
+  getFinalPage() {
+    const residuo = this.countEmployees % 10;
+    console.log(this.countEmployees);
+    const parteEntera = Math.trunc(this.countEmployees / 10);
+    if (residuo === 0) {
+
+      this.finalPage = parteEntera - 1;
+    } else {
+      this.finalPage = parteEntera;
+    }
+
+  }
 }

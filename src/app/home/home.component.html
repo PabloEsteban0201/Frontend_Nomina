@@ -31,7 +31,7 @@
         <div>
           <div class="card">
             <p-table [value]="employees" [(selection)]="selectedEmployees" dataKey="personalNumber"
-              [tableStyle]="{ 'min-width': '50rem' , 'min-height':'30rem'}">
+              [tableStyle]="{ 'min-width': '50rem' }">
               <ng-template pTemplate="header">
                 <tr>
                   <th>Nombre</th>
@@ -97,8 +97,7 @@
       <label for="personalNumber">NUIP</label>
       <input type="number" pInputText id="personalNumber" [disabled]="noInsert" [(ngModel)]="employeeDto.personalNumber"
         required autofocus />
-      <small class="p-error" *ngIf="findByPersonalNumber(employeeDto.personalNumber) && noInsert===false">El numero ya
-        existe</small>
+      <small class="p-error" *ngIf="noInsert===false">El numero es requerido</small>
     </div>
     <div class="field">
       <label for="company">Empresa</label>

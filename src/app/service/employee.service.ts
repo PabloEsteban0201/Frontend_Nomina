@@ -33,8 +33,16 @@ export class EmployeeService {
   }
 
   //get the total of registers in Employees Table
-  getCountEmployees(): Observable<number> {
-    return this.httpClient.get<number>(this.url + "/employee/count")
+  getCountEmployees(): Promise<number> {
+    return new Promise<number>((resolve,reject)=>{
+      this.httpClient.get<number>(this.url + "/employee/count").subscribe(
+        {
+          next: (data) => resolve(data),
+          error: (error) => reject(error)
+        }
+      );
+    });
+    
   }
 
   //get all the copany names
@@ -67,15 +75,15 @@ export class EmployeeService {
       );
 
     });
-  
+
   }
 
-  getCurrenciesCompanies():Observable<CurrencyCompanyRequest[]>{
+  getCurrenciesCompanies(): Observable<CurrencyCompanyRequest[]> {
 
     return this.httpClient.get<CurrencyCompanyRequest[]>(this.url + '/currency/getCurrenciesCompanies');
   }
 
-  saveEmployeeDto(employeeDto: EmployeeDto): Promise<void>{
+  saveEmployeeDto(employeeDto: EmployeeDto): Promise<void> {
 
     const employJson = JSON.stringify(employeeDto);
     console.log("JSon", employJson);
@@ -88,7 +96,7 @@ export class EmployeeService {
         error => {
           console.log(error.status);
           reject(error);
-          
+
         }
 
       );
@@ -96,8 +104,8 @@ export class EmployeeService {
     });
   }
 
-  deleteEmployee(personalNumber:number): Promise<void>{
-    
+  deleteEmployee(personalNumber: number): Promise<void> {
+
     console.log(personalNumber);
 
     return new Promise<void>((resolve, reject) => {
@@ -109,7 +117,7 @@ export class EmployeeService {
         error => {
           console.log(error.status);
           reject(error);
-          
+
         }
 
       );
@@ -118,20 +126,20 @@ export class EmployeeService {
 
   }
 
-  uploadFile(formData:FormData): Promise<void>{
+  uploadFile(formData: FormData): Promise<void> {
     console.log("Entro al uploadFile");
 
     return new Promise<void>((resolve, reject) => {
 
-      this.httpClient.post<any>(this.url + "/upload/csv",formData).subscribe(
+      this.httpClient.post<any>(this.url + "/upload/csv", formData).subscribe(
         data => {
-          console.log("Respuesta exitosa",data)
+          console.log("Respuesta exitosa", data)
           resolve();
         },
         error => {
-          console.log("Se obtuvo un error",error.status);
+          console.log("Se obtuvo un error", error.status);
           reject(error);
-          
+
         }
 
       );
@@ -139,5 +147,21 @@ export class EmployeeService {
     });
 
   }
+
+  //Nueva sintaxis
+  getExistanceEmployee(personalNumber: number): Promise<boolean> {
+
+    return new Promise<boolean>((resolve, reject) => {
+      this.httpClient.get<boolean>(this.url + `/employee/searchEmployee/${personalNumber}`).subscribe(
+        {
+          next: (data) => resolve(data),
+          error: (error) => reject(error)
+        }
+      );
+
+    });
+
+  }
+
 
 }
